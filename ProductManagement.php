@@ -58,7 +58,7 @@ if(isset($_POST['submit'])){
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <title>Product management</title>
+      <title>Product Management</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
       
