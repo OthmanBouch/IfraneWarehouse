@@ -13,7 +13,7 @@ if(!isset($_SESSION['admin_name'])){
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <title>User Page</title>
+      <title>User  Page</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/font-awesome-4.7.0/">
