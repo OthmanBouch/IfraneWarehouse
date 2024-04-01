@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
 <html lang="en" dir="ltr">
 <head>
       <meta charset="utf-8">
-      <title>Suppliers Management</title>
+      <title>SUPPLIER MANAGEMENT</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
       
