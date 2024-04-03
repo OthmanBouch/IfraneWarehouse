@@ -61,7 +61,7 @@ if(isset($_POST['submit'])){
       <title>Product Management</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
-      
+      <link rel="shortcut icon" type="x-icon" href="AppFavicon.png">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>

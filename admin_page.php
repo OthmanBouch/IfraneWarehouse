@@ -16,6 +16,7 @@ if(!isset($_SESSION['admin_name'])){
       <title>User  Page</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
+      <link rel="shortcut icon" type="x-icon" href="AppFavicon.png">
       <link rel="stylesheet" href="css/font-awesome-4.7.0/">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>

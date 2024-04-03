@@ -45,7 +45,7 @@ if(isset($_POST['submit'])){
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
-
+   <link rel="shortcut icon" type="x-icon" href="AppFavicon.png">
 </head>
 <body style="background: url(Image1.jpg);background-repeat: no-repeat;background-size: 100%;">
    
