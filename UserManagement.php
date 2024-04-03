@@ -77,7 +77,7 @@ if(isset($_POST['submit'])){
             <ul class="list-items">
                <li><a href="admin_page.php"><i class="fas fa-home"></i>Home</a></li>
                <li><a href="UserManagement.php"><i class="fas fa-book"></i>Manage Users</a></li>
-               <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Product</a></li>
+               <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Products</a></li>
                <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
                <li><a href=""><i class="bi bi-receipt-cutoff"></i>orders</a></li>
                <li><a href=""><i class="fas fa-user"></i>#</a></li>
