@@ -48,7 +48,7 @@ if(isset($_POST['submit'])){
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>IfraneWarehouse Log In</title>
-   <link rel="shortcut icon" href="/s/tod1zk/b/6/b6b48b2829824b869586ac216d119363/_/favicon-software.ico">
+   <link rel="shortcut icon" type="x-icon" href="/images/loginfavicon.png">
    <link rel="stylesheet" href="css/style.css">
 
 </head>
