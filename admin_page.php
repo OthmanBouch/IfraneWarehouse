@@ -47,7 +47,7 @@ if(!isset($_SESSION['admin_name'])){
                <li><a href=""><i class="fas fa-user"></i>#</a></li>
                <li><a href=""><i class="fas fa-user"></i>#</a></li>
                <li><a href=""><i class="fas fa-envelope"></i>About Us</a></li>
-               <li><a href="">Log Out</a></li>
+               <li><a href="logout.php">Log Out</a></li>
                <h4><span style="color:goldenrod ;"><?php echo     $_SESSION['admin_name'] ?></span></h4>
             </ul>
            
