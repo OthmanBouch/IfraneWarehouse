@@ -6,7 +6,7 @@ session_start();
 
 if(!isset($_SESSION['admin_name'])){
    header('location:login.php');
-}
+}else $ID = $_SESSION['admin_ID'];
 
 ?>
 <!DOCTYPE html>
