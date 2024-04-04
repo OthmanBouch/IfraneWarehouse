@@ -143,7 +143,16 @@ if (isset($_POST['submit'])) {
                     ?>
                 </td>
       <td><?php echo $row['Quantity_ordered']; ?></td>
-      <td><?php echo $row['S_id']; ?></td>
+      <td>
+    <?php
+        // Fetching supplier name from the suppliers table
+        $supplierID = $row['S_id'];
+        $supplierQuery = "SELECT Sname FROM supplier WHERE ID = '$supplierID'";
+        $supplierResult = mysqli_query($conn, $supplierQuery);
+        $supplierName = mysqli_fetch_array($supplierResult)['Sname'];
+        echo $supplierName;
+    ?>
+   </td>
       <td><?php echo $row['Status']; ?></td>
       <td><?php echo $row['Created_by']; ?></td>
       <td><?php echo $row['Created']; ?></td>
