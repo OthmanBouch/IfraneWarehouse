@@ -13,7 +13,7 @@ if(!isset($_SESSION['admin_name'])){
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
-      <title>User  Page</title>
+      <title>Order Management</title>
       <link rel="stylesheet" href="css/style3.css">
       <link rel="stylesheet" href="css/style.css">
       <link rel="shortcut icon" type="x-icon" href="AppFavicon.png">
@@ -60,10 +60,10 @@ if(!isset($_SESSION['admin_name'])){
       <br>
       <br>
 
-      <H3 style="text-align: center; margin: 0; color: brown; font-family: 'Helvetica', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(165, 42, 42, 0.5);">List of Suppliers</H3>
+      <H3 style="text-align: center; margin: 0; color: brown; font-family: 'Helvetica', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(165, 42, 42, 0.5);">List of Orders</H3>
 
         <br>
-      <p><kbd> Search for products </kbd> <input class="form-control" id="myInput" type="text" placeholder="Search.."></p>
+      <p><kbd> Search for orders </kbd> <input class="form-control" id="myInput" type="text" placeholder="Search.."></p>
 
       <table class="table table-light table-hover table-striped table-bordered ">
   <thead>
