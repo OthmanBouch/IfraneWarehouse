@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
       <td><?php echo $row['Created']; ?></td>
       <!-- bach tl9a product id for any id -->
       <td>
-        <a href="#" class="btn btn-link btn-sm view_prod_data">View order</a>
+        <a href="#" class="btn btn-link btn-sm view_order_data">View order</a>
       </td>
       <td>
         <a href="#" class="btn btn-link btn-sm edit_prod">Update order</a>
@@ -272,6 +272,31 @@ if (isset($_POST['submit'])) {
 <!-- Add order Modal -->
 
 
+<!-- view order Modal -->
+<div class="modal fade" id="viewordermodal" tabindex="-1" role="dialog" aria-labelledby="viewordermodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewordermodalLabel">order Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+         
+        
+      </div>
+      <div class="modal-body">
+        <div class="view_order_data">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- view order Modal -->
+
 
 
 
@@ -309,7 +334,37 @@ if (isset($_POST['submit'])) {
 </script>
 
 
+<!-- view order -->
+<script>
+    $(document).ready(function () {
+        $('.view_order_data').click(function (e) { 
+            e.preventDefault();
+            /*console.log('help');*/
+            var order_id = $(this).closest('tr').find('.order_id').text();
+            /*console.log(order_id);*/
+            
+            $.ajax({
+                method: "POST",
+                url: "code.php",
+                data: {
+                    'click_vieworder_btn':true,
+                    'order_id':order_id,
+                },
+                
+                success: function (response) {
+                    /* console.log(response);*/
 
+                    $('.view_order_data').html(response);
+                    $('#viewordermodal').modal('show')
+                }
+            });
+
+        });
+    });
+
+
+    
+  </script>
 
 
 

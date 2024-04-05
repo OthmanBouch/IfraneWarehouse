@@ -287,7 +287,32 @@ if(isset($_POST['updates_supplier']))
  
 }
 /*---------------------------------------------------------Order Area---------------------------------------------------------------- */
-/* view order */
+/* View order */
+if(isset($_POST['click_vieworder_btn']))
+{
+    
+    $id = $_POST['order_id'];
+    
+
+   $fetch_query = "SELECT * FROM product_supplier where ID='$id'";
+    $fetch_query_run = mysqli_query($conn,$fetch_query);
+    
+    if(mysqli_num_rows($fetch_query_run) > 0){
+        while($row = mysqli_fetch_array($fetch_query_run))
+        {
+            echo '
+            <h6>order ID:  '.$row['ID'].'</h6>
+            <h6>Quantity Ordered:  '.$row['Quantity_ordered'].'</h6>
+            <h6>Quantity received:  '.$row['Quantity_received'].'</h6>
+            <h6>Quantity remaining:  '.$row['Quantity_remaining'].'</h6>
+            <h6>Created by:  '.$row['Created_by'].'</h6>
+            <h6>Creation date:  '.$row['Created'].'</h6>
+            <h6>Status:  '.$row['Status'].'</h6>';
+        }
+    }else{
+        echo '<h4> no record found</h4>';
+    }
+} 
 
 
 /* Delete order */
