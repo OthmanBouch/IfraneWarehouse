@@ -161,7 +161,7 @@ if (isset($_POST['submit'])) {
         <a href="#" class="btn btn-link btn-sm view_order_data">View order</a>
       </td>
       <td>
-        <a href="#" class="btn btn-link btn-sm edit_prod">Update order</a>
+        <a href="#" class="btn btn-link btn-sm edit_order">Update order</a>
       </td>
       <td>
         <a href="#" class="btn btn-warning btn-sm delete_order">Delete order</a>
@@ -298,6 +298,48 @@ if (isset($_POST['submit'])) {
 <!-- view order Modal -->
 
 
+<!-- update order Modal -->
+<div class="modal fade" id="editorder" tabindex="-1" aria-labelledby="editorderLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editorderLabel text-align:center">Update Order Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+<form class="row g-3" method="POST" action="code.php">
+  <div class="col-md-12">
+    
+    <input type="hidden" class="form-control" id="order_id" name="id">
+  </div>
+    
+
+  <div class="col-md-6">
+    <label for="inputtext" class="form-label">Quantity</label>
+    <input type="text" name="Quantity_ordered" id="Quantity_ordered" class="form-control">
+  </div>
+  
+  <div class="col-md-6">
+    <label for="inputState" class="form-label">Status</label>
+    <select name="Status" class="form-control" id="Status" >
+      <option selected value="Not defined">Choose...</option>
+      <option value="Pending">Pending</option>
+      <option value="Arrived">Arrived</option>
+      </select>
+  </div>
+
+
+  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="updates_order" class="btn btn-warning">Update changes</button>
+      </div>
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- update order Modal -->
 
 
 
@@ -305,8 +347,7 @@ if (isset($_POST['submit'])) {
 
 
 
-
-
+<!------------------------------------------------------------------Scripts -------------------------------------------------------->
 
 <!-- delete order -->
 <script>
@@ -367,6 +408,46 @@ if (isset($_POST['submit'])) {
   </script>
 
 
+<!-- update order -->
+<script>
+    $(document).ready(function () {
+        $('.edit_order').click(function (e) { 
+            e.preventDefault();
+           
+            var order_id = $(this).closest('tr').find('.order_id').text();
+            /*console.log(order_id);*/
+          
+            $.ajax({
+                method: "POST",
+                url: "code.php",
+                data: {
+                    'click_editorder_btn':true,
+                    'order_id':order_id,
+                },
+                
+                success: function (response) {
+                   /* console.log(response);*/
+                    $.each(response, function (key, value) {
+                        
+                        /*console.log(value['Lname']);*/
+                        $('#Quantity_ordered').val(value['Quantity_ordered']);
+                        $('#Status').val(value['Status']);
+                        
+                        
+                         
+                    }); 
+
+
+                    $('#editorder').modal('show')
+                }
+            });
+
+        });
+    });
+
+
+    
+  </script>
 
 
 <!-- Search info from table -->

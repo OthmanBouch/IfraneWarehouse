@@ -287,6 +287,7 @@ if(isset($_POST['updates_supplier']))
  
 }
 /*---------------------------------------------------------Order Area---------------------------------------------------------------- */
+
 /* View order */
 if(isset($_POST['click_vieworder_btn']))
 {
@@ -328,5 +329,49 @@ if(isset($_POST['click_order_delete_btn'])){
         echo "problem occured; skill issue";
     }
 }
+
+/* Show record to update order */
+if(isset($_POST['click_editorder_btn']))
+{
+    $id = $_POST['order_id'];
+    $arrayresult = [];
+   $fetch_query = "SELECT * FROM product_supplier where ID ='$id'";
+    $fetch_query_run = mysqli_query($conn,$fetch_query);
+
+    if(mysqli_num_rows($fetch_query_run) > 0){
+        while($row = mysqli_fetch_array($fetch_query_run))
+        {
+           array_push($arrayresult, $row);
+           header('content-type: application/json');
+           echo json_encode($arrayresult);
+        }
+    }else{
+        echo '<h4> no record found</h4>';
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>
