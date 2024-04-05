@@ -158,13 +158,13 @@ if (isset($_POST['submit'])) {
       <td><?php echo $row['Created']; ?></td>
       <!-- bach tl9a product id for any id -->
       <td>
-        <a href="#" class="btn btn-link btn-sm view_prod_data">View Product</a>
+        <a href="#" class="btn btn-link btn-sm view_prod_data">View order</a>
       </td>
       <td>
-        <a href="#" class="btn btn-link btn-sm edit_prod">Update Product</a>
+        <a href="#" class="btn btn-link btn-sm edit_prod">Update order</a>
       </td>
       <td>
-        <a href="#" class="btn btn-warning btn-sm delete_prod">Delete Product</a>
+        <a href="#" class="btn btn-warning btn-sm delete_order">Delete order</a>
       </td>
 
              </tr>
@@ -283,7 +283,30 @@ if (isset($_POST['submit'])) {
 
 
 
-
+<!-- delete order -->
+<script>
+    $(document).ready(function () {
+        $('.delete_order').click(function (e) { 
+            e.preventDefault();
+          
+          var order_id =  $(this).closest('tr').find('.order_id').text();
+             console.log(order_id)
+              $.ajax({
+                method: "POST",
+                url: "code.php",
+                data: {
+                    'click_order_delete_btn': true,
+                    'order_id': order_id
+                },
+                
+                success: function (response) {
+                    console.log(response);
+                    window.location.reload();
+                }
+              });
+        });
+    });
+</script>
 
 
 

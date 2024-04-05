@@ -287,5 +287,21 @@ if(isset($_POST['updates_supplier']))
  
 }
 /*---------------------------------------------------------Order Area---------------------------------------------------------------- */
+/* view order */
+
+
+/* Delete order */
+if(isset($_POST['click_order_delete_btn'])){
+    $id = $_POST['order_id'];
+
+    $delete_query = "DELETE FROM product_supplier WHERE id = '$id'";
+    $delete_query_run = mysqli_query($conn,$delete_query);  
+
+    if($delete_query_run){
+        echo "data deleted successfully";
+    }else{
+        echo "problem occured; skill issue";
+    }
+}
 
 ?>
