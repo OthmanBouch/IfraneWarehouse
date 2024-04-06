@@ -36,13 +36,19 @@ if (isset($_POST['submit'])) {
     $insert = "INSERT INTO product_supplier (P_id, Quantity_ordered, Quantity_remaining, S_id, Status, Created_by) VALUES ('$productID', '$Quantity_ordered','$Quantity_ordered', '$supplierID', '$Status', '$ID')";
     if (mysqli_query($conn, $insert)) {
         // hna khasna nzidi query bach nupdatiw stock table fin ghaykon 3ndna product mstoryin
-
-        $insert_stock = "INSERT INTO stocks (P_id, Quantity) VALUES ('$productID', 0)";
-        if (mysqli_query($conn, $insert_stock)) {
-            header('location:OrderManagement.php');
-        } else {
-            echo "Error: " . $insert_stock . "<br>" . mysqli_error($conn);
-        }
+        $existing_stock_query = "SELECT * FROM stocks WHERE P_id = '$productID'";
+        $existing_stock_result = mysqli_query($conn, $existing_stock_query);
+        if (mysqli_num_rows($existing_stock_result) == 0) {
+          // If no stock entry exists, insert a new one with quantity set to 0
+          $insert_stock_query = "INSERT INTO stocks (P_id, Quantity) VALUES ('$productID', 0)";
+          if (mysqli_query($conn, $insert_stock_query)) {
+              // Stock entry inserted successfully
+          } else {
+              // Error inserting stock entry
+              echo "Error: " . $insert_stock_query . "<br>" . mysqli_error($conn);
+          }
+      }
+        
     } else {
         echo "Error: " . $insert . "<br>" . mysqli_error($conn);
     }
