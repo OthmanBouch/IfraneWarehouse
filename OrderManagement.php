@@ -35,8 +35,14 @@ if (isset($_POST['submit'])) {
 
     $insert = "INSERT INTO product_supplier (P_id, Quantity_ordered, Quantity_remaining, S_id, Status, Created_by) VALUES ('$productID', '$Quantity_ordered','$Quantity_ordered', '$supplierID', '$Status', '$ID')";
     if (mysqli_query($conn, $insert)) {
-        
-        header('location:OrderManagement.php');
+        // hna khasna nzidi query bach nupdatiw stock table fin ghaykon 3ndna product mstoryin
+
+        $insert_stock = "INSERT INTO stocks (P_id, Quantity) VALUES ('$productID', 0)";
+        if (mysqli_query($conn, $insert_stock)) {
+            header('location:OrderManagement.php');
+        } else {
+            echo "Error: " . $insert_stock . "<br>" . mysqli_error($conn);
+        }
     } else {
         echo "Error: " . $insert . "<br>" . mysqli_error($conn);
     }
