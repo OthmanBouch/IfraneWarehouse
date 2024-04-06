@@ -361,7 +361,7 @@ if(isset($_POST['updates_order']))
     $Quantity_ordered = $_POST['Quantity_ordered'];
     $Quantity_received = $_POST['Quantity_received'];
     $Status = $_POST['Status'];
-    
+
     //update the order 
     $update_query = "UPDATE product_supplier SET Quantity_ordered='$Quantity_ordered', Status='$Status', Quantity_received ='$Quantity_received' WHERE ID = '$id'";
     $update_query_run = mysqli_query($conn,$update_query);
@@ -375,7 +375,9 @@ if(isset($_POST['updates_order']))
         
         $update_status_query = "UPDATE product_supplier SET Status='Arrived' WHERE ID = '$id'";
         mysqli_query($conn, $update_status_query);
-    }
+    }else {
+        $update_status_query = "UPDATE product_supplier SET Status='Pending' WHERE ID = '$id'";
+        mysqli_query($conn, $update_status_query);}
 
 
 
