@@ -131,7 +131,7 @@ if (isset($_POST['submit'])) {
             ?>
      <tr>
       
-      <td class=" order_id"><?php echo $row['ID']; ?></td>
+      <td class="order_id"><?php echo $row['ID']; ?></td>
       <td>
                     <?php
                     // Fetching product name from the products table mn lproduct id
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
       <td><?php echo $row['Created']; ?></td>
       <!-- bach tl9a product id for any id -->
       <td>
-        <a href="#" class="btn btn-link btn-sm view_order_data">View order</a>
+        <a href="#" class="btn btn-link btn-sm view_orders_data">View order</a>
       </td>
       <td>
         <a href="#" class="btn btn-link btn-sm edit_order">Update order</a>
@@ -279,9 +279,6 @@ if (isset($_POST['submit'])) {
       <div class="modal-header">
         <h5 class="modal-title" id="viewordermodalLabel">order Information</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            
-         
-        
       </div>
       <div class="modal-body">
         <div class="view_order_data">
@@ -312,13 +309,10 @@ if (isset($_POST['submit'])) {
     
     <input type="hidden" class="form-control" id="order_id" name="id">
   </div>
-    
-
   <div class="col-md-6">
     <label for="inputtext" class="form-label">Quantity</label>
     <input type="text" name="Quantity_ordered" id="Quantity_ordered" class="form-control">
   </div>
-  
   <div class="col-md-6">
     <label for="inputState" class="form-label">Status</label>
     <select name="Status" class="form-control" id="Status" >
@@ -378,7 +372,7 @@ if (isset($_POST['submit'])) {
 <!-- view order -->
 <script>
     $(document).ready(function () {
-        $('.view_order_data').click(function (e) { 
+        $('.view_orders_data').click(function (e) { 
             e.preventDefault();
             /*console.log('help');*/
             var order_id = $(this).closest('tr').find('.order_id').text();
@@ -389,7 +383,7 @@ if (isset($_POST['submit'])) {
                 url: "code.php",
                 data: {
                     'click_vieworder_btn':true,
-                    'order_id':order_id,
+                    'order_id': order_id,
                 },
                 
                 success: function (response) {
@@ -430,6 +424,7 @@ if (isset($_POST['submit'])) {
                     $.each(response, function (key, value) {
                         
                         /*console.log(value['Lname']);*/
+                        $('#order_id').val(value['ID']);
                         $('#Quantity_ordered').val(value['Quantity_ordered']);
                         $('#Status').val(value['Status']);
                         

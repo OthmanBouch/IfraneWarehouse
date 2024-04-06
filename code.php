@@ -308,7 +308,10 @@ if(isset($_POST['click_vieworder_btn']))
             <h6>Quantity remaining:  '.$row['Quantity_remaining'].'</h6>
             <h6>Created by:  '.$row['Created_by'].'</h6>
             <h6>Creation date:  '.$row['Created'].'</h6>
-            <h6>Status:  '.$row['Status'].'</h6>';
+            <h6>Status:  '.$row['Status'].'</h6>
+            
+            
+            ';
         }
     }else{
         echo '<h4> no record found</h4>';
@@ -350,7 +353,28 @@ if(isset($_POST['click_editorder_btn']))
     }
 }
 
+/* update order*/ 
+if(isset($_POST['updates_order']))
+{
+    $id = $_POST['id'];
+   
+    $Quantity_ordered = $_POST['Quantity_ordered'];
+    $Status = $_POST['Status'];
 
+    $update_query = "UPDATE product_supplier SET Quantity_ordered='$Quantity_ordered', Status='$Status' WHERE ID = '$id'";
+    $update_query_run = mysqli_query($conn,$update_query);
+    
+    if($update_query_run){
+        $_SESSION['status'] = 'data updated successfully';
+        header("location:OrderManagement.php");
+    }else{
+        $_SESSION['status'] = 'data not updated successfully';
+        header("location:OrderManagement.php");
+    }
+   
+  
+ 
+}
 
 
 
