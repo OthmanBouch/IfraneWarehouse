@@ -33,8 +33,9 @@ if (isset($_POST['submit'])) {
         $supplierID = mysqli_fetch_array($supplier_result)['supplier'];
     }
 
-    $insert = "INSERT INTO product_supplier (P_id, Quantity_ordered, S_id, Status, Created_by) VALUES ('$productID', '$Quantity_ordered', '$supplierID', '$Status', '$ID')";
+    $insert = "INSERT INTO product_supplier (P_id, Quantity_ordered, Quantity_remaining, S_id, Status, Created_by) VALUES ('$productID', '$Quantity_ordered','$Quantity_ordered', '$supplierID', '$Status', '$ID')";
     if (mysqli_query($conn, $insert)) {
+        
         header('location:OrderManagement.php');
     } else {
         echo "Error: " . $insert . "<br>" . mysqli_error($conn);
