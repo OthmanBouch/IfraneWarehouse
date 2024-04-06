@@ -157,7 +157,8 @@ if (isset($_POST['submit'])) {
    </td>
       <td><?php echo $row['Quantity_received']; ?></td>
       <td><?php echo $row['Quantity_remaining']; ?></td>
-      <td><?php echo $row['Status']; ?></td>
+      <td style="color: <?php echo ($row['Status'] == 'Pending') ? 'red' : (($row['Status'] == 'Arrived') ? 'green' : ''); ?>"><?php echo $row['Status']; ?></td>
+
       <td><?php echo $row['Created_by']; ?></td>
       <td><?php echo $row['Created']; ?></td>
       <!-- bach tl9a product id for any id -->
