@@ -109,6 +109,8 @@ if (isset($_POST['submit'])) {
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Product</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity orderer</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Supplier</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity received</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity remaining</th>
       <th width="col" scope="col" style="text-shadow: 5px 5px 10px orange;">Status</th>
       <th width="col" scope="col" style="text-shadow: 5px 5px 10px orange;">Created by (id)</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Creation date</th>
@@ -153,6 +155,8 @@ if (isset($_POST['submit'])) {
         echo $supplierName;
     ?>
    </td>
+      <td><?php echo $row['Quantity_received']; ?></td>
+      <td><?php echo $row['Quantity_remaining']; ?></td>
       <td><?php echo $row['Status']; ?></td>
       <td><?php echo $row['Created_by']; ?></td>
       <td><?php echo $row['Created']; ?></td>
@@ -314,6 +318,10 @@ if (isset($_POST['submit'])) {
     <input type="text" name="Quantity_ordered" id="Quantity_ordered" class="form-control">
   </div>
   <div class="col-md-6">
+    <label for="inputtext" class="form-label">Quantity received</label>
+    <input type="text" name="Quantity_received" id="Quantity_received" class="form-control">
+  </div>
+  <div class="col-md-6">
     <label for="inputState" class="form-label">Status</label>
     <select name="Status" class="form-control" id="Status" >
       <option selected value="Not defined">Choose...</option>
@@ -426,6 +434,7 @@ if (isset($_POST['submit'])) {
                         /*console.log(value['Lname']);*/
                         $('#order_id').val(value['ID']);
                         $('#Quantity_ordered').val(value['Quantity_ordered']);
+                        $('#Quantity_received').val(value['Quantity_received']);
                         $('#Status').val(value['Status']);
                         
                         
