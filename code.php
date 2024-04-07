@@ -505,17 +505,28 @@ if(isset($_POST['click_viewHstock_btn']))
     $fetch_query_run = mysqli_query($conn,$fetch_query);
     
     if(mysqli_num_rows($fetch_query_run) > 0){
+        $increment = 1;
         while($row = mysqli_fetch_array($fetch_query_run))
-        {
+        {   
+        
             echo '
+            <h6>transaction number:  '.$increment.'</h6>
             <h6>Transaction ID:  '.$row['ID'].'</h6>
             <h6>Stock ID:  '.$row['Stock'].'</h6>
             <h6>Product ID:  '.$row['Product'].'</h6>
             <h6>Quantity:  '.$row['Quantity'].'</h6>
             <h6>Time:  '.$row['Time'].'</h6>
+            <br>
+            <br>
+            <br>
+            <br>
+            
+            
+            
             
             
             ';
+            $increment = $increment + 1;
         }
     }else{
         echo '<h4> no record found</h4>';
