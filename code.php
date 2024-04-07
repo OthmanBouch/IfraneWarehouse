@@ -378,9 +378,22 @@ if(isset($_POST['updates_order']))
     }else {
         $update_status_query = "UPDATE product_supplier SET Status='Pending' WHERE ID = '$id'";
         mysqli_query($conn, $update_status_query);}
+        //here is the code to insert l history dyal stock stock id ghadi y3mr mn l function dyal add stock
+    $selectpid_querry ="SELECT P_id FROM product_supplier WHERE ID = '$id'";
+    $select_pid_result = mysqli_query($conn, $selectpid_querry);
+    $prod_id = mysqli_fetch_array($select_pid_result)['P_id'];
+    
+    $selectStockID_query = "SELECT ID FROM stock WHERE P_id = '$prod_id'";
+    $selectStockID_query_result = mysqli_query($conn, $selectStockID_query);
+    $stock_ID = mysqli_fetch_array($selectStockID_query_result)['ID'];
 
-
-
+    $select_querry = "SELECT * FROM product_supplier where ID = '$id'";
+    $select_querry_run = mysqli_query($conn, $select_querry);
+    $product = mysqli_fetch_assoc($select_querry_run)['P_id']; 
+    
+    $insert_history = "INSERT INTO history (Stock,Product, Quantity) VALUES ('$stock_ID','$product', '$Quantity_received')";
+    $insert_history_run = mysqli_query($conn, $insert_history);
+        // stop insert history 
     if($update_query_run){
         $_SESSION['status'] = 'data updated successfully';
         header("location:OrderManagement.php");
@@ -481,6 +494,33 @@ if(isset($_POST['updates_stock']))
 }
 
 
+/* View history stock */
+if(isset($_POST['click_viewHstock_btn']))
+{
+    
+    $id = $_POST['stock_id'];
+    
+
+    $fetch_query = "SELECT * FROM history where Stock='$id'";
+    $fetch_query_run = mysqli_query($conn,$fetch_query);
+    
+    if(mysqli_num_rows($fetch_query_run) > 0){
+        while($row = mysqli_fetch_array($fetch_query_run))
+        {
+            echo '
+            <h6>Transaction ID:  '.$row['ID'].'</h6>
+            <h6>Stock ID:  '.$row['Stock'].'</h6>
+            <h6>Product ID:  '.$row['Product'].'</h6>
+            <h6>Quantity:  '.$row['Quantity'].'</h6>
+            <h6>Time:  '.$row['Time'].'</h6>
+            
+            
+            ';
+        }
+    }else{
+        echo '<h4> no record found</h4>';
+    }
+} 
 
 
 

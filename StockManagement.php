@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
     // insert query
     $insert = "INSERT INTO stock (P_id, Location) VALUES ('$productID', '$locationID')";
     if (mysqli_query($conn, $insert)) {
-        
+        $insert_history_query = "INSERT INS";
         header('location:StockManagement.php');
     } else {
         echo "Error: " . $insert . "<br>" . mysqli_error($conn);
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                <li><a href="UserManagement.php"><i class="fas fa-book"></i>Manage Users</a></li>
                <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Product</a></li>
                <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
-               <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>orders</a></li>
+               <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>Manage Orders</a></li>
                <li><a href="StockManagement.php"><i class="fas fa-user"></i>Manage Stocks</a></li>
                <li><a href=""><i class="fas fa-user"></i>#</a></li>
                <li><a href=""><i class="fas fa-envelope"></i>About Us</a></li>
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
       <br>
       <br>
       
-      <H3 style="text-align: center; margin: 0; color: brown; font-family: 'Helvetica', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(165, 42, 42, 0.5);">List of Orders</H3>
+      <H3 style="text-align: center; margin: 0; color: brown; font-family: 'Helvetica', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(165, 42, 42, 0.5);">List of Stocks</H3>
 
       <br>
 
@@ -110,6 +110,7 @@ if (isset($_POST['submit'])) {
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">view</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Update</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Delete</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">History</th>
 
     </tr>
   </thead>
@@ -156,6 +157,9 @@ if (isset($_POST['submit'])) {
       </td>
       <td>
         <a href="#" class="btn btn-warning btn-sm delete_stock">Delete Stock</a>
+      </td>
+      <td>
+        <a href="#" class="btn btn-warning btn-sm history_stock">Stock History</a>
       </td>
 
              </tr>
@@ -351,7 +355,27 @@ if (isset($_POST['submit'])) {
 </div>
 <!-- update stock Modal -->
 
+<!-- history stock Modal -->
+<div class="modal fade" id="viewHstockmodal" tabindex="-1" role="dialog" aria-labelledby="viewHstockmodalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewHstockmodalLabel">History stock Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="view_Hstock_data">
 
+        </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- history stock Modal -->
 
 
 
@@ -461,6 +485,38 @@ if (isset($_POST['submit'])) {
     
   </script>
 
+
+<!-- view history stock -->
+<script>
+    $(document).ready(function () {
+        $('.history_stock').click(function (e) { 
+            e.preventDefault();
+            /*console.log('help');*/
+            var stock_id = $(this).closest('tr').find('.stock_id').text();
+            /*console.log(stock_id);*/
+            
+            $.ajax({
+                method: "POST",
+                url: "code.php",
+                data: {
+                    'click_viewHstock_btn':true,
+                    'stock_id': stock_id,
+                },
+                
+                success: function (response) {
+                    /* console.log(response);*/
+
+                    $('.view_Hstock_data').html(response);
+                    $('#viewHstockmodal').modal('show')
+                }
+            });
+
+        });
+    });
+
+
+    
+  </script>
 
 <!-- Search info from table -->
   <script>
