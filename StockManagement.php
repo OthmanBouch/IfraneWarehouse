@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
                <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Product</a></li>
                <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
                <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>orders</a></li>
-               <li><a href=""><i class="fas fa-user"></i>#</a></li>
+               <li><a href="StockManagement.php"><i class="fas fa-user"></i>Manage Stocks</a></li>
                <li><a href=""><i class="fas fa-user"></i>#</a></li>
                <li><a href=""><i class="fas fa-envelope"></i>About Us</a></li>
                <li><a href="logout.php">Log Out</a></li>
