@@ -436,9 +436,49 @@ if(isset($_POST['click_stock_delete_btn'])){
 }
 
 
+/* Show record to update stock */
+if(isset($_POST['click_editstock_btn']))
+{
+    $id = $_POST['stock_id'];
+    $arrayresult = [];
+   $fetch_query = "SELECT * FROM stock where ID ='$id'";
+    $fetch_query_run = mysqli_query($conn,$fetch_query);
+
+    if(mysqli_num_rows($fetch_query_run) > 0){
+        while($row = mysqli_fetch_array($fetch_query_run))
+        {
+           array_push($arrayresult, $row);
+           header('content-type: application/json');
+           echo json_encode($arrayresult);
+        }
+    }else{
+        echo '<h4> no record found</h4>';
+    }
+}
 
 
+/* update stock */ 
+if(isset($_POST['updates_stock']))
+{
+    $id = $_POST['id'];
+    $Location = $_POST['Location'];
+    
+    $getlocid = "SELECT ID FROM location WHERE Location = '$Location'";
+    $getlocid_run = mysqli_query($conn,$getlocid);
+    $locid = mysqli_fetch_assoc($getlocid_run)['ID'];
 
+    $update_query = "UPDATE stock SET Location='$locid' WHERE ID = '$id'";
+    $update_query_run = mysqli_query($conn, $update_query);
+
+    if($update_query_run){
+        $_SESSION['status'] = 'data updated successfully';
+        header("location:StockManagement.php");
+    }else{
+        $_SESSION['status'] = 'data not updated successfully';
+        header("location:StockManagement.php");
+    }
+ 
+}
 
 
 

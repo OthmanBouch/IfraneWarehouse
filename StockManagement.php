@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
         <a href="#" class="btn btn-link btn-sm view_stocks_data">View Stock</a>
       </td>
       <td>
-        <a href="#" class="btn btn-link btn-sm edit_order">Update Stock</a>
+        <a href="#" class="btn btn-link btn-sm edit_stock">Update Stock</a>
       </td>
       <td>
         <a href="#" class="btn btn-warning btn-sm delete_stock">Delete Stock</a>
@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
 <!------------------------------------------------------------------ Modals -------------------------------------------------------->
 
 
-  <!-- Add order Modal -->
+  <!-- Add stock Modal -->
 <div class="modal fade" id="AddStock" tabindex="-1" aria-labelledby="AddStockLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -273,10 +273,10 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 </div>
-<!-- Add order Modal -->
+<!-- Add stock Modal -->
 
 
-<!-- view order Modal -->
+<!-- view stock Modal -->
 <div class="modal fade" id="viewstockmodal" tabindex="-1" role="dialog" aria-labelledby="viewstockmodalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -296,44 +296,52 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 </div>
-<!-- view order Modal -->
+<!-- view stock Modal -->
 
 
-<!-- update order Modal -->
-<div class="modal fade" id="editorder" tabindex="-1" aria-labelledby="editorderLabel" aria-hidden="true">
+<!-- update stock Modal -->
+<div class="modal fade" id="editstock" tabindex="-1" aria-labelledby="editstockLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content"> 
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="editorderLabel text-align:center">Update Order Information</h1>
+        <h1 class="modal-title fs-5" id="editstockLabel text-align:center">Update stock Information</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 <form class="row g-3" method="POST" action="code.php">
   <div class="col-md-12">
-    
-    <input type="hidden" class="form-control" id="order_id" name="id">
+     <!-- id  -->
+    <input type="hidden" class="form-control" id="stock_id" name="id">
   </div>
-  <div class="col-md-6">
-    <label for="inputtext" class="form-label">Quantity</label>
-    <input type="text" name="Quantity_ordered" id="Quantity_ordered" class="form-control">
-  </div>
-  <div class="col-md-6">
-    <label for="inputtext" class="form-label">Quantity received</label>
-    <input type="text" name="Quantity_received" id="Quantity_received" class="form-control">
-  </div>
-  <div class="col-md-6">
-    <label for="inputState" class="form-label">Status</label>
-    <select name="Status" class="form-control" id="Status" >
+  <div class="col-12">
+    <label for="inputState" class="form-label">Location :</label>
+    <select name="Location" class="form-control" id="inputState" multiple="">
       <option selected value="Not defined">Choose...</option>
-      <option value="Pending">Pending</option>
-      <option value="Arrived">Arrived</option>
-      </select>
+      
+      <?php 
+       include 'config.php';
+       $location_query = "SELECT Location FROM location";
+       $location_result = mysqli_query($conn, $location_query);
+       if ($location_result) {
+        
+        while ($row = mysqli_fetch_assoc($location_result)) {
+            $locationName = $row['Location'];
+            echo '<option value="' . $locationName . '">' . $locationName . '</option>';
+        }
+      }else {
+      
+      echo '<option disabled>Error fetching locations</option>';
+            } 
+       mysqli_close($conn);
+  ?>
+      
+    </select>
   </div>
 
 
   <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" name="updates_order" class="btn btn-warning">Update changes</button>
+        <button type="submit" name="updates_stock" class="btn btn-warning">Update changes</button>
       </div>
 </form>
       </div>
@@ -341,7 +349,7 @@ if (isset($_POST['submit'])) {
     </div>
   </div>
 </div>
-<!-- update order Modal -->
+<!-- update stock Modal -->
 
 
 
@@ -366,7 +374,7 @@ if (isset($_POST['submit'])) {
                     'click_stock_delete_btn': true,
                     'stock_id': stock_id
 
-                    
+
                 },  
                 
                 success: function (response) {
@@ -415,18 +423,18 @@ if (isset($_POST['submit'])) {
 <!-- update stock -->
 <script>
     $(document).ready(function () {
-        $('.edit_order').click(function (e) { 
+        $('.edit_stock').click(function (e) { 
             e.preventDefault();
            
-            var order_id = $(this).closest('tr').find('.order_id').text();
-            /*console.log(order_id);*/
+            var stock_id = $(this).closest('tr').find('.stock_id').text();
+           /* console.log(stock_id);*/
           
             $.ajax({
                 method: "POST",
                 url: "code.php",
                 data: {
-                    'click_editorder_btn':true,
-                    'order_id':order_id,
+                    'click_editstock_btn':true,
+                    'stock_id':stock_id,
                 },
                 
                 success: function (response) {
@@ -434,17 +442,15 @@ if (isset($_POST['submit'])) {
                     $.each(response, function (key, value) {
                         
                         /*console.log(value['Lname']);*/
-                        $('#order_id').val(value['ID']);
-                        $('#Quantity_ordered').val(value['Quantity_ordered']);
-                        $('#Quantity_received').val(value['Quantity_received']);
-                        $('#Status').val(value['Status']);
+                        $('#stock_id').val(value['ID']);
+                        $('#Location').val(value['Location']);
                         
                         
                          
                     }); 
 
 
-                    $('#editorder').modal('show')
+                    $('#editstock').modal('show')
                 }
             });
 
