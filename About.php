@@ -137,23 +137,8 @@
     <p class="card-desc">The best project in our database system class !</p>
   </div>
   <div class="card">
-    <h2 class="card-title">Fatima Zahra Habzane</h2>
-    <img src="images\fati_pic.jpg" alt="">
-    <p class="card-desc">This project is synonym of perfection !</p>
-  </div>
-  <div class="card">
-    <h2 class="card-title">Ahmed Katane</h2>
-    <img src="images\katane_pic.jpg" alt="">
-    <p class="card-desc">I really enjoyed working on this project !</p>
-  </div>
-  <div class="card">
     <h2 class="card-title">Bouchentouf Omar</h2>
     <img src="images\BouchentoufOmar_pic.jpg" alt="">
-    <p class="card-desc">Hope we get the best grade !</p>
-  </div>
-  <div class="card">
-    <h2 class="card-title">Salah El Graini</h2>
-    <img src="images\Graini.jpeg" alt="">
     <p class="card-desc">Hope we get the best grade !</p>
   </div>
 </div>
@@ -162,7 +147,7 @@
 <br>
 
 <br>
-<h3>📜  This web application was done by `Wlad<span style="color: brown;">Na3ima</span>` members with lots of ♡, 
+<h3>📜  This web application was done by `Only<span style="color: brown;">Code</span>` team members with lots of ♡, 
 for the Agile And DevOps course final project  📜</h3>
 <br>
 
