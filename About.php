@@ -134,7 +134,7 @@
   <div class="card">
     <h2 class="card-title">Bouchentouf Othman</h2>
     <img src="images\Bouchi_Pic.jpeg" alt="">
-    <p class="card-desc">The best project in our database system class !</p>
+    <p class="card-desc">Dagedigedagedago ivebinmaridalontimego!</p>
   </div>
   <div class="card">
     <h2 class="card-title">Bouchentouf Omar</h2>
