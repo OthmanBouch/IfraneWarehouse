@@ -12,8 +12,7 @@ if (!isset($_SESSION['admin_name'])) {
 if (isset($_POST['submit'])) {
 
     $Product = $_POST['Product'];
-    $Quantity_ordered = $_POST['Quantity_ordered'];
-    $Status = $_POST['Status'];
+    $Location = $_POST['Location'];
 
     // Fetching product id from the products table
     $product_query = "SELECT ID FROM products WHERE Pname = '$Product'";
@@ -23,20 +22,19 @@ if (isset($_POST['submit'])) {
     } else {
         $productID = mysqli_fetch_array($product_result)['ID'];
     }
-
-    // Fetching supplier id from the products table
-    $supplier_query = "SELECT supplier FROM productswsuppliers WHERE product = '$productID'";
-    $supplier_result = mysqli_query($conn, $supplier_query);
-    if (!$supplier_result) {
+    // Fetching location ID from the location table
+    $location_query = "SELECT ID FROM location WHERE Location = '$Location'";
+    $location_result = mysqli_query($conn, $location_query);
+    if (!$location_result) {
         echo "Error: " . mysqli_error($conn);
     } else {
-        $supplierID = mysqli_fetch_array($supplier_result)['supplier'];
+        $locationID = mysqli_fetch_array($location_result)['ID'];
     }
-
-    $insert = "INSERT INTO product_supplier (P_id, Quantity_ordered, Quantity_remaining, S_id, Status, Created_by) VALUES ('$productID', '$Quantity_ordered','$Quantity_ordered', '$supplierID', '$Status', '$ID')";
+    // insert query
+    $insert = "INSERT INTO stock (P_id, Location) VALUES ('$productID', '$locationID')";
     if (mysqli_query($conn, $insert)) {
         
-        header('location:OrderManagement.php');
+        header('location:StockManagement.php');
     } else {
         echo "Error: " . $insert . "<br>" . mysqli_error($conn);
     }
@@ -100,7 +98,7 @@ if (isset($_POST['submit'])) {
 
       <br>
 
-      <p><kbd> Search for orders </kbd> <input class="form-control" id="myInput" type="text" placeholder="Search.."></p>
+      <p><kbd> Search for Stocks </kbd> <input class="form-control" id="myInput" type="text" placeholder="Search.."></p>
 
     
       <table class="table table-light table-hover table-striped table-bordered">
@@ -108,13 +106,7 @@ if (isset($_POST['submit'])) {
     <tr>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">ID</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Product</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity orderer</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Supplier</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity received</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Quantity remaining</th>
-      <th width="col" scope="col" style="text-shadow: 5px 5px 10px orange;">Status</th>
-      <th width="col" scope="col" style="text-shadow: 5px 5px 10px orange;">Created by (id)</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Creation date</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Location</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">view</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Update</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Delete</th>
@@ -124,7 +116,7 @@ if (isset($_POST['submit'])) {
   <tbody id="myTable">
     <?php 
     @include 'config.php';
-    $fetch_query = "SELECT * FROM product_supplier";
+    $fetch_query = "SELECT * FROM stock";
     $fetch_query_run = mysqli_query($conn,$fetch_query);
 
     if(mysqli_num_rows($fetch_query_run) > 0){
@@ -134,7 +126,7 @@ if (isset($_POST['submit'])) {
             ?>
      <tr>
       
-      <td class="order_id"><?php echo $row['ID']; ?></td>
+      <td class="stock_id"><?php echo $row['ID']; ?></td>
       <td>
                     <?php
                     // Fetching product name from the products table mn lproduct id
@@ -145,32 +137,25 @@ if (isset($_POST['submit'])) {
                     echo $productName;
                     ?>
                 </td>
-      <td><?php echo $row['Quantity_ordered']; ?></td>
       <td>
     <?php
         // Fetching supplier name from the suppliers table
-        $supplierID = $row['S_id'];
-        $supplierQuery = "SELECT Sname FROM supplier WHERE ID = '$supplierID'";
-        $supplierResult = mysqli_query($conn, $supplierQuery);
-        $supplierName = mysqli_fetch_array($supplierResult)['Sname'];
-        echo $supplierName;
+        $locationID = $row['Location'];
+        $locationQuery = "SELECT Location FROM location WHERE ID = '$locationID'";
+        $locationResult = mysqli_query($conn, $locationQuery);
+        $locationName = mysqli_fetch_array($locationResult)['Location'];
+        echo $locationName;
     ?>
    </td>
-      <td><?php echo $row['Quantity_received']; ?></td>
-      <td><?php echo $row['Quantity_remaining']; ?></td>
-      <td style="color: <?php echo ($row['Status'] == 'Pending') ? 'red' : (($row['Status'] == 'Arrived') ? 'green' : ''); ?>"><?php echo $row['Status']; ?></td>
-
-      <td><?php echo $row['Created_by']; ?></td>
-      <td><?php echo $row['Created']; ?></td>
       <!-- bach tl9a product id for any id -->
       <td>
-        <a href="#" class="btn btn-link btn-sm view_orders_data">View order</a>
+        <a href="#" class="btn btn-link btn-sm view_stocks_data">View Stock</a>
       </td>
       <td>
-        <a href="#" class="btn btn-link btn-sm edit_order">Update order</a>
+        <a href="#" class="btn btn-link btn-sm edit_order">Update Stock</a>
       </td>
       <td>
-        <a href="#" class="btn btn-warning btn-sm delete_order">Delete order</a>
+        <a href="#" class="btn btn-warning btn-sm delete_stock">Delete Stock</a>
       </td>
 
              </tr>
@@ -187,8 +172,8 @@ if (isset($_POST['submit'])) {
 </table>
 
 <div style="text-align: center;">
-  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#AddOrder">
-    Add an order
+  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#AddStock">
+    Add a Stock from existing products
   </button>
 </div>
 
@@ -216,18 +201,18 @@ if (isset($_POST['submit'])) {
 
 
   <!-- Add order Modal -->
-<div class="modal fade" id="AddOrder" tabindex="-1" aria-labelledby="AddOrderLabel" aria-hidden="true">
+<div class="modal fade" id="AddStock" tabindex="-1" aria-labelledby="AddStockLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="AddOrderLabel text-align:center">Add order Information</h1>
+        <h1 class="modal-title fs-5" id="AddStockLabel text-align:center">Add Stock Information</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 <form class="row g-3" method="post" action="">
 
   <div class="col-12">
-    <label for="inputState" class="form-label">Product</label>
+    <label for="inputState" class="form-label">Product :</label>
     <select name="Product" class="form-control" id="inputState" multiple="">
       <option selected value="Not defined">Choose...</option>
       
@@ -251,23 +236,36 @@ if (isset($_POST['submit'])) {
     </select>
   </div>
 
-  <div class="col-md-6">
-    <label for="inputtext" class="form-label">Quantity</label>
-    <input type="text" name="Quantity_ordered" class="form-control">
+  <div class="col-12">
+    <label for="inputState" class="form-label">Location :</label>
+    <select name="Location" class="form-control" id="inputState" multiple="">
+      <option selected value="Not defined">Choose...</option>
+      
+      <?php 
+       include 'config.php';
+       $location_query = "SELECT Location FROM location";
+       $location_result = mysqli_query($conn, $location_query);
+       if ($location_result) {
+        
+        while ($row = mysqli_fetch_assoc($location_result)) {
+            $locationName = $row['Location'];
+            echo '<option value="' . $locationName . '">' . $locationName . '</option>';
+        }
+      }else {
+      
+      echo '<option disabled>Error fetching locations</option>';
+            } 
+       mysqli_close($conn);
+  ?>
+      
+    </select>
   </div>
 
-  <div class="col-md-6">
-    <label for="inputState" class="form-label">Status</label>
-    <select name="Status" class="form-control" id="inputState">
-      <option selected value="Not defined">Choose...</option>
-      <option value="Pending">Pending</option>
-      <option value="Arrived">Arrived</option>
-      </select>
-  </div>
+
 
   <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" name="submit" class="btn btn-warning">Add Order</button>
+        <button type="submit" name="submit" class="btn btn-warning">Add Stock</button>
       </div>
 </form>
       </div>
@@ -279,15 +277,15 @@ if (isset($_POST['submit'])) {
 
 
 <!-- view order Modal -->
-<div class="modal fade" id="viewordermodal" tabindex="-1" role="dialog" aria-labelledby="viewordermodalLabel" aria-hidden="true">
+<div class="modal fade" id="viewstockmodal" tabindex="-1" role="dialog" aria-labelledby="viewstockmodalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="viewordermodalLabel">order Information</h5>
+        <h5 class="modal-title" id="viewstockmodalLabel">stock Information</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="view_order_data">
+        <div class="view_stock_data">
 
         </div>
       </div>
@@ -353,21 +351,23 @@ if (isset($_POST['submit'])) {
 
 <!------------------------------------------------------------------Scripts -------------------------------------------------------->
 
-<!-- delete order -->
+<!-- delete stock -->
 <script>
     $(document).ready(function () {
-        $('.delete_order').click(function (e) { 
+        $('.delete_stock').click(function (e) { 
             e.preventDefault();
           
-          var order_id =  $(this).closest('tr').find('.order_id').text();
-             console.log(order_id)
+          var stock_id =  $(this).closest('tr').find('.stock_id').text();
+             console.log(stock_id)
               $.ajax({
                 method: "POST",
                 url: "code.php",
                 data: {
-                    'click_order_delete_btn': true,
-                    'order_id': order_id
-                },
+                    'click_stock_delete_btn': true,
+                    'stock_id': stock_id
+
+                    
+                },  
                 
                 success: function (response) {
                     console.log(response);
@@ -379,28 +379,28 @@ if (isset($_POST['submit'])) {
 </script>
 
 
-<!-- view order -->
+<!-- view stock -->
 <script>
     $(document).ready(function () {
-        $('.view_orders_data').click(function (e) { 
+        $('.view_stocks_data').click(function (e) { 
             e.preventDefault();
             /*console.log('help');*/
-            var order_id = $(this).closest('tr').find('.order_id').text();
-            /*console.log(order_id);*/
+            var stock_id = $(this).closest('tr').find('.stock_id').text();
+            /*console.log(stock_id);*/
             
             $.ajax({
                 method: "POST",
                 url: "code.php",
                 data: {
-                    'click_vieworder_btn':true,
-                    'order_id': order_id,
+                    'click_viewstock_btn':true,
+                    'stock_id': stock_id,
                 },
                 
                 success: function (response) {
                     /* console.log(response);*/
 
-                    $('.view_order_data').html(response);
-                    $('#viewordermodal').modal('show')
+                    $('.view_stock_data').html(response);
+                    $('#viewstockmodal').modal('show')
                 }
             });
 
@@ -412,7 +412,7 @@ if (isset($_POST['submit'])) {
   </script>
 
 
-<!-- update order -->
+<!-- update stock -->
 <script>
     $(document).ready(function () {
         $('.edit_order').click(function (e) { 

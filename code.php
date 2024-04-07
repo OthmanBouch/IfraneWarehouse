@@ -286,7 +286,7 @@ if(isset($_POST['updates_supplier']))
     }
  
 }
-/*---------------------------------------------------------Order Area---------------------------------------------------------------- */
+/*--------------------------------------------------------- Order Area---------------------------------------------------------------- */
 
 /* View order */
 if(isset($_POST['click_vieworder_btn']))
@@ -393,10 +393,47 @@ if(isset($_POST['updates_order']))
  
 }
 
+/*--------------------------------------------------------- Stock Area---------------------------------------------------------------- */
 
+/* View stock */
+if(isset($_POST['click_viewstock_btn']))
+{
+    
+    $id = $_POST['stock_id'];
+    
 
+    $fetch_query = "SELECT * FROM stock where ID='$id'";
+    $fetch_query_run = mysqli_query($conn,$fetch_query);
+    
+    if(mysqli_num_rows($fetch_query_run) > 0){
+        while($row = mysqli_fetch_array($fetch_query_run))
+        {
+            echo '
+            <h6>stock ID:  '.$row['ID'].'</h6>
+            <h6>Product ID:  '.$row['P_id'].'</h6>
+            <h6>Location ID:  '.$row['Location'].'</h6>
+            
+            
+            ';
+        }
+    }else{
+        echo '<h4> no record found</h4>';
+    }
+} 
 
+/* Delete stock */
+if(isset($_POST['click_stock_delete_btn'])){
+    $id = $_POST['stock_id'];
 
+    $delete_query = "DELETE FROM stock WHERE id = '$id'";
+    $delete_query_run = mysqli_query($conn,$delete_query);  
+
+    if($delete_query_run){
+        echo "data deleted successfully";
+    }else{
+        echo "problem occured; sound like a skill issue to me";
+    }
+}
 
 
 
