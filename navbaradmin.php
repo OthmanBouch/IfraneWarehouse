@@ -16,7 +16,7 @@
             <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
             <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>Manage Orders</a></li>
             <li><a href="StockManagement.php"><i class="fas fa-user"></i>Manage Stocks</a></li>
-            <li><a href=""><i class="fas fa-user"></i>#</a></li>
+            <li><a href="Personnal.php"><i class="fas fa-user"></i>Profile</a></li>
             <li><a href="About.php"><i class="fas fa-envelope"></i>About Us</a></li>
             <li><a href="logout.php">Log Out</a></li>
             <h4><span style="color:goldenrod ;"><?php echo $_SESSION['admin_name'] ?></span></h4>
