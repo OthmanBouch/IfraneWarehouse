@@ -1,3 +1,60 @@
+<?php
+@include 'config.php';
+
+session_start();
+
+if (!isset($_SESSION['admin_name'])) {
+    header('location:login.php');
+    exit(); // Add exit after redirecting to prevent further execution
+} else {
+    $ID = $_SESSION['admin_ID'];
+}
+
+if (isset($_POST['submit'])) {
+    $updates = array();
+    
+    // Check if each field has been provided with a new value
+    if (!empty($_POST['Fname'])) {
+        $updates[] = "Fname = '" . $_POST['Fname'] . "'";
+    }
+    if (!empty($_POST['Lname'])) {
+        $updates[] = "Lname = '" . $_POST['Lname'] . "'";
+    }
+    if (!empty($_POST['email'])) {
+        $updates[] = "Email = '" . $_POST['email'] . "'";
+    }
+    if (!empty($_POST['address'])) {
+        $updates[] = "Adress = '" . $_POST['address'] . "'";
+    }
+    if (!empty($_POST['Zip'])) {
+        $updates[] = "Zip = '" . $_POST['Zip'] . "'";
+    }
+    if (!empty($_POST['password']) && !empty($_POST['cpassword'])) {
+        if ($_POST['password'] === $_POST['cpassword']) {
+            $updates[] = "Password = '" . md5($_POST['password']) . "'";
+        } else {
+            $error[] = 'Password not matched!';
+        }
+    }
+
+    // Construct the SQL query dynamically
+    if (!empty($updates)) {
+        $query = "UPDATE users SET " . implode(", ", $updates) . " WHERE ID = '$ID'";
+        
+        // Execute the query
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            header("Location: Personnal.php");
+            exit();
+        } else {
+            echo "Error updating record: " . mysqli_error($conn);
+        }
+    }
+}
+
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -45,15 +102,18 @@
         <div class="content-container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10 col-xl-8 mx-auto">
-                    <h2 class="h3 mb-4 page-title">Settings</h2>
+                    
                     <div class="my-4">
                         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <br>
                                 <br>
+                                <br>
+                                <br>
+                                <br>
                             </li>
                         </ul>
-                        <form>
+             <form method="post" action="">
                 <div class="row mt-5 align-items-center">
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">
@@ -63,21 +123,61 @@
                     <div class="col">
                         <div class="row align-items-center">
                             <div class="col-md-7">
-                                <h4 class="mb-1">Brown, Asher</h4>
-                                <p class="small mb-3"><span class="badge badge-dark">New York, USA</span></p>
+                                
+                                <h4 class="mb-1">
+                                    <?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Fname = mysqli_fetch_assoc($result)['Fname'];
+                                                        }
+                                                        $queryselect1 = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result1 = mysqli_query($conn, $queryselect1);
+                                                        if ($result1) { 
+                                                            $User_Lname = mysqli_fetch_assoc($result1)['Lname'];
+                                                        }
+
+                                                        echo $User_Fname . " " . $User_Lname;
+
+                                                         ?></h4>
+                                <p class="small mb-3"><span class="badge badge-dark">User ID: <?php echo $ID ?></span></p>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-7">
                                 <p class="text-muted">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus. In hac habitasse platea dictumst. Cras urna quam, malesuada vitae risus at,
-                                    pretium blandit sapien.
+                                    <?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Description = mysqli_fetch_assoc($result)['Description'];
+                                                        }
+                                                        echo $User_Description;
+                                                         ?>
+                                    
                                 </p>
                             </div>
                             <div class="col">
-                                <p class="small mb-0 text-muted">Nec Urna Suscipit Ltd</p>
-                                <p class="small mb-0 text-muted">P.O. Box 464, 5975 Eget Avenue</p>
-                                <p class="small mb-0 text-muted">(537) 315-1481</p>
+                                <p class="small mb-0 text-muted">IfraneWarehouse user</p>
+                                <p class="small mb-0 text-muted"><?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Adress = mysqli_fetch_assoc($result)['Adress'];
+                                                        }
+                                                        echo $User_Adress;
+                                                         
+                                ?></p>
+                                <p class="small mb-0 text-muted">
+                                    <?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Phone = mysqli_fetch_assoc($result)['Phone'];
+                                                        }
+                                                        echo "<b>".$User_Phone ."<b>";
+                                                         ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -86,36 +186,43 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="firstname">Firstname</label>
-                        <input type="text" id="firstname" class="form-control" placeholder="Brown" />
+                        <input type="text" name="Fname" id="firstname" class="form-control" placeholder="<?php echo $User_Fname ?>" />
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Lastname</label>
-                        <input type="text" id="lastname" class="form-control" placeholder="Asher" />
+                        <input type="text" name="Lname" id="lastname" class="form-control" placeholder="<?php echo $User_Lname ?>" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="brown@asher.me" />
+                    <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="<?php
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Email = mysqli_fetch_assoc($result)['Email'];
+                                                        }
+                                                        echo $User_Email;
+                    ?>" />
                 </div>
                 <div class="form-group">
                     <label for="inputAddress5">Address</label>
-                    <input type="text" class="form-control" id="inputAddress5" placeholder="P.O. Box 464, 5975 Eget Avenue" />
+                    <input type="text" name="address" class="form-control" id="inputAddress5" placeholder="<?php echo $User_Adress ?>" />
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputCompany5">Company</label>
-                        <input type="text" class="form-control" id="inputCompany5" placeholder="Nec Urna Suscipit Ltd" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState5">State</label>
-                        <select id="inputState5" class="form-control">
-                            <option selected="">Choose...</option>
-                            <option>...</option>
-                        </select>
+                        <input type="text" class="form-control" id="inputCompany5" placeholder="IfraneWarehouse" disabled>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputZip5">Zip</label>
-                        <input type="text" class="form-control" id="inputZip5" placeholder="98232" />
+                        <input type="text" name="Zip" class="form-control" id="inputZip5" placeholder="<?php  
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Zip = mysqli_fetch_assoc($result)['Zip'];
+                                                        }
+                                                        echo $User_Zip;
+                        ?>" />
                     </div>
                 </div>
                 <hr class="my-4" />
@@ -123,15 +230,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputPassword4">Old Password</label>
-                            <input type="password" class="form-control" id="inputPassword5" />
+                            <input type="password" class="form-control" id="inputPassword5" placeholder="********"
+                             disabled/>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword5">New Password</label>
-                            <input type="password" class="form-control" id="inputPassword5" />
+                            <input type="password" class="form-control" name="password" id="inputPassword5" />
                         </div>
                         <div class="form-group">
                             <label for="inputPassword6">Confirm Password</label>
-                            <input type="password" class="form-control" id="inputPassword6" />
+                            <input type="password" class="form-control" name="cpassword" id="inputPassword6" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -145,7 +253,7 @@
                         </ul>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Save Change</button>
+                <button type="submit" name="submit" class="btn btn-primary">Save Changes</button>
             </form>
                     </div>
                 </div>
