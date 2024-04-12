@@ -124,7 +124,14 @@ if (isset($_POST['submit'])) {
                 <div class="row mt-5 align-items-center">
                     <div class="col-md-3 text-center mb-5">
                         <div class="avatar avatar-xl">
-                            <img src="images/Bouchi_Pic.jpeg" alt="..." class="avatar-img rounded-circle" />
+                        <img src="images/<?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Image = mysqli_fetch_assoc($result)['img'];
+                                                        }
+                                                        echo $User_Image;
+                        ?>" alt="Product Image"  >
                         </div>
                     </div>
                     <div class="col">
