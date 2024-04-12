@@ -26,6 +26,9 @@ if (isset($_POST['submit'])) {
     if (!empty($_POST['email'])) {
         $updates[] = "Email = '" . $_POST['email'] . "'";
     }
+    if (!empty($_POST['Phone'])) {
+        $updates[] = "Phone = '" . $_POST['Phone'] . "'";
+    }
     if (!empty($_POST['address'])) {
         $updates[] = "Adress = '" . $_POST['address'] . "'";
     }
@@ -243,6 +246,17 @@ if (isset($_POST['submit'])) {
                                                             $User_Zip = mysqli_fetch_assoc($result)['Zip'];
                                                         }
                                                         echo $User_Zip;
+                        ?>" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputZip5">Phone-number</label>
+                        <input type="text" name="Phone" class="form-control" id="inputZip5" placeholder="<?php  
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Phone = mysqli_fetch_assoc($result)['Phone'];
+                                                        }
+                                                        echo $User_Phone;
                         ?>" />
                     </div>
                     <div class="form-group col-md-12">
