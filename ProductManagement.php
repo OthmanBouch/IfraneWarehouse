@@ -18,6 +18,7 @@ if(isset($_POST['submit'])){
     $Description = $_POST['Description'];
     $Created_by = $ID;
     $Suppliers = $_POST['Suppliers'];
+    $Price = $_POST['Price'];
     
  
     $select = " SELECT * FROM products WHERE Pname = '$Pname'&& Ptype = '$Ptype' && Description = '$Description'";
@@ -29,7 +30,7 @@ if(isset($_POST['submit'])){
        $error[] = 'product might already exist!';
  
     }else{
-          $insert = "INSERT INTO products (img, Pname, Ptype, Description, Created_by) VALUES('$img','$Pname','$Ptype','$Description','$Created_by')";
+          $insert = "INSERT INTO products (img, Pname, Price, Ptype, Description, Created_by) VALUES('$img','$Pname', '$Price','$Ptype','$Description','$Created_by')";
           mysqli_query($conn, $insert);
           // find the last inserted items id
           $newProductID = mysqli_insert_id($conn);
@@ -99,6 +100,7 @@ if(isset($_POST['submit'])){
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">ID</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Image</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Pname</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Price</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Ptype</th>
       <th width="20%" scope="col" style="text-shadow: 5px 5px 10px orange;">Description</th>
       <th width="10%" scope="col" style="text-shadow: 5px 5px 10px orange;">Suppliers</th>
@@ -126,6 +128,7 @@ if(isset($_POST['submit'])){
       <td class=" prod_id"><?php echo $row['ID']; ?></td>
       <td><img src="images/<?php echo $row['img']; ?>" alt="Product Image" style="max-width: 85px; max-height: 85 px;"></td>
       <td><b><?php echo $row['Pname']; ?></b></td>
+      <td><b><?php echo $row['Price']; ?></b></td>
       <td><?php echo $row['Ptype']; ?></td>
       <td style="color: DarkGoldenRod;"><h16><?php echo $row['Description']; ?></h16></td>
       <!-- bach tl9a suppliors for any product -->
@@ -210,6 +213,10 @@ if(isset($_POST['submit'])){
     <input type="text" name="Pname" class="form-control">
   </div>
   <div class="col-md-6">
+    <label for="inputtext" class="form-label">Product price</label>
+    <input type="text" name="Price" class="form-control">
+  </div>
+  <div class="col-md-6">
     <label for="inputState" class="form-label">Product Type</label>
     <select name="Ptype" class="form-control" id="inputState">
       <option selected value="Not defined">Choose...</option>
@@ -259,10 +266,11 @@ if(isset($_POST['submit'])){
       
     </select>
   </div>
-  <div class="form-group">
+  <div class="col-md-6">
     <label for="exampleFormControlTextarea1">Description</label>
     <textarea class="form-control" name="Description" id="exampleFormControlTextarea1" rows="7"></textarea>
   </div>
+  
 
   <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
