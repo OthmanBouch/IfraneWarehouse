@@ -8,14 +8,14 @@ if (!isset($_SESSION['admin_name'])) {
     exit(); // Add exit after redirecting to prevent further execution
 }
 
-// Query database to get counts of arrived and pending items
+// hna ghanakhdo ch7al dyal items li pending o ch7al li arrived
 $query = "SELECT Status, COUNT(*) AS count FROM product_supplier GROUP BY Status";
 $result = mysqli_query($conn, $query);
 
 $arrivedCount = 0;
 $pendingCount = 0;
 
-// Process data
+// o hna ghadi nsetiw ghir status as a hover m3a numbers of items 
 while ($row = mysqli_fetch_assoc($result)) {
     if ($row['Status'] === 'Arrived') {
         $arrivedCount = $row['count'];
@@ -65,34 +65,7 @@ mysqli_close($conn);
 
 </head>
 <body style="background: url(LogInImage.jpg);background-repeat: no-repeat;background-size: 100%;">
-<div class="wrapper">
-    <input type="checkbox" id="btn" hidden>
-    <label for="btn" class="menu-btn">
-        <i class="fas fa-bars"></i>
-        <i class="fas fa-times"></i>
-    </label>
-    <nav id="sidebar">
-        <div class="title">
-            <h3> <a href="user_page.php" style="color: black;">Ifrane<span style="color: brown;">Warehouse</span></a>
-            </h3>
-        </div>
-        <ul class="list-items">
-            <li><a href="admin_page.php"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="UserManagement.php"><i class="fas fa-book"></i>Manage Users</a></li>
-            <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Product</a></li>
-            <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
-            <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>Manage Orders</a></li>
-            <li><a href="StockManagement.php"><i class="fas fa-user"></i>Manage Stocks</a></li>
-            <li><a href=""><i class="fas fa-user"></i>#</a></li>
-            <li><a href="About.php"><i class="fas fa-envelope"></i>About Us</a></li>
-            <li><a href="logout.php">Log Out</a></li>
-            <h4><span style="color:goldenrod ;"><?php echo $_SESSION['admin_name'] ?></span></h4>
-        </ul>
-    </nav>
 
-    <!-- Container for the pie chart -->
-    
-</div>
 <br>
 <H3 style="text-align: center; margin: 0; color: brown; font-family: 'Helvetica', sans-serif; font-size: 24px; font-weight: bold; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(165, 42, 42, 0.5);">Dashboard</H3>
 
@@ -131,7 +104,7 @@ mysqli_close($conn);
         }
     });
 </script>
-
+<?php include 'navbaradmin.php'; ?>
 </body>
 </html>
 
