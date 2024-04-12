@@ -26,6 +26,9 @@ if (isset($_POST['submit'])) {
     if (!empty($_POST['address'])) {
         $updates[] = "Adress = '" . $_POST['address'] . "'";
     }
+    if (!empty($_POST['description'])) {
+        $updates[] = "Description = '" . $_POST['description'] . "'";
+    }
     if (!empty($_POST['Zip'])) {
         $updates[] = "Zip = '" . $_POST['Zip'] . "'";
     }
@@ -111,6 +114,10 @@ if (isset($_POST['submit'])) {
                                 <br>
                                 <br>
                                 <br>
+                                <br>
+                                <br>
+                                <br>
+                                
                             </li>
                         </ul>
              <form method="post" action="">
@@ -205,15 +212,15 @@ if (isset($_POST['submit'])) {
                     ?>" />
                 </div>
                 <div class="form-group">
-                    <label for="inputAddress5">Address</label>
+                    <label for="inputAddress6">Address</label>
                     <input type="text" name="address" class="form-control" id="inputAddress5" placeholder="<?php echo $User_Adress ?>" />
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" >
                         <label for="inputCompany5">Company</label>
                         <input type="text" class="form-control" id="inputCompany5" placeholder="IfraneWarehouse" disabled>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-6">
                         <label for="inputZip5">Zip</label>
                         <input type="text" name="Zip" class="form-control" id="inputZip5" placeholder="<?php  
                                                         $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
@@ -224,6 +231,19 @@ if (isset($_POST['submit'])) {
                                                         echo $User_Zip;
                         ?>" />
                     </div>
+                    <div class="form-group col-md-12">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea  name="description" class="form-control" id="inputAddress5" placeholder=" <?php 
+                                                        $queryselect = "SELECT * FROM users WHERE ID = '$ID'";
+                                                        $result = mysqli_query($conn, $queryselect);
+                                                        if ($result) { 
+                                                            $User_Description = mysqli_fetch_assoc($result)['Description'];
+                                                        }
+                                                        echo $User_Description;
+                                                         ?>"></textarea>
+                    </div>
+
+                   
                 </div>
                 <hr class="my-4" />
                 <div class="row mb-4">
