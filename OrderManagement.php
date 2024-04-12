@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
 
 
 
-<?php include 'navbaradmin.php'; ?>
+
 
    </body>
 
@@ -443,4 +443,5 @@ if (isset($_POST['submit'])) {
   });
 });
 </script>
+<?php include 'navbaradmin.php'; ?>
 </html>
