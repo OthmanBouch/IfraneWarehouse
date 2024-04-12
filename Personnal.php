@@ -14,6 +14,9 @@ if (isset($_POST['submit'])) {
     $updates = array();
     
     // Check if each field has been provided with a new value
+    if (!empty($_POST['img'])) {
+        $updates[] = "img = '" . $_POST['img'] . "'";
+    }
     if (!empty($_POST['Fname'])) {
         $updates[] = "Fname = '" . $_POST['Fname'] . "'";
     }
@@ -131,7 +134,7 @@ if (isset($_POST['submit'])) {
                                                             $User_Image = mysqli_fetch_assoc($result)['img'];
                                                         }
                                                         echo $User_Image;
-                        ?>" alt="Product Image"  >
+                        ?>" alt="User Image"  >
                         </div>
                     </div>
                     <div class="col">
@@ -206,6 +209,10 @@ if (isset($_POST['submit'])) {
                         <label for="lastname">Lastname</label>
                         <input type="text" name="Lname" id="lastname" class="form-control" placeholder="<?php echo $User_Lname ?>" />
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputtext" class="form-label">Picture</label>
+                    <input style="min-height: 45px; " type="file" name="img" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="inputEmail4">Email</label>
