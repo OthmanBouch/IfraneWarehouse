@@ -335,6 +335,10 @@ if(isset($_POST['submit'])){
     <label for="inputtext" class="form-label">Product name</label>
     <input type="text" name="Pname" id="Pname" class="form-control">
   </div>
+  <div class="col-md-6">
+    <label for="inputtext" class="form-label">Product price</label>
+    <input type="text" name="Price" id="Price" class="form-control">
+  </div>
   <!-- #product type options --> 
   <div class="col-md-6">
     <label for="inputState" class="form-label">Product Type</label>
@@ -386,7 +390,7 @@ if(isset($_POST['submit'])){
 
     </select>
   </div>
-  <div class="form-group">
+  <div class="col-md-6">
     <label for="exampleFormControlTextarea1">Description</label>
     <textarea class="form-control" name="Description" id="Description" rows="7"></textarea>
   </div>
@@ -504,6 +508,7 @@ if(isset($_POST['submit'])){
                         /*console.log(value['Lname']);*/
                         $('#prod_id').val(value['ID']);
                         $('#Pname').val(value['Pname']);
+                        $('#Price').val(value['Price']);
                         $('#Ptype').val(value['Ptype']);
                         $('#Description').val(value['Description']);
                         

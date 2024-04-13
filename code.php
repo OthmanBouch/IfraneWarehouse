@@ -155,6 +155,7 @@ if(isset($_POST['updates_product']))
    
     $Pname = $_POST['Pname'];
     $Ptype = $_POST['Ptype'];
+    $Price = $_POST['Price'];
     $Description = $_POST['Description'];
     if (!empty($_POST['img'])) {
         // If a new image is selected, update the image 
@@ -168,7 +169,7 @@ if(isset($_POST['updates_product']))
         $img = $existingImagePathRow['img'];
     }
 
-    $update_query = "UPDATE products SET img='$img', Pname='$Pname', Ptype='$Ptype', Description='$Description' WHERE ID = '$id'";
+    $update_query = "UPDATE products SET img='$img', Pname='$Pname', Price='$Price', Ptype='$Ptype', Description='$Description' WHERE ID = '$id'";
     $update_query_run = mysqli_query($conn,$update_query);
     
     //now we delete the supplier f prodwsupp table bach matjinash chi foreign key error
