@@ -82,8 +82,11 @@ if (isset($_POST['submit'])) {
     <tr>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">ID</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Product</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Stock Price</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Location</th>
-      <th scope="col" style="text-shadow: 5px 5px 10px orange;">view</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Item Count</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">Stock Price</th>
+      <th scope="col" style="text-shadow: 5px 5px 10px orange;">View</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Update</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">Delete</th>
       <th scope="col" style="text-shadow: 5px 5px 10px orange;">History</th>
@@ -113,21 +116,56 @@ if (isset($_POST['submit'])) {
                     $productName = mysqli_fetch_array($productResult)['Pname'];
                     echo $productName;
                     ?>
-                </td>
+      </td>
       <td>
-    <?php
+        <?php
+        // Fetching product price from the products table mn lproduct id
+        $productID = $row['P_id'];
+        $productQuery = "SELECT Price FROM products WHERE ID = '$productID'";
+        $productResult = mysqli_query($conn, $productQuery);
+        $productPrice = mysqli_fetch_array($productResult)['Price'];
+        echo $productPrice;
+        ?></td>
+      
+      <td><?php
         // Fetching supplier name from the suppliers table
         $locationID = $row['Location'];
         $locationQuery = "SELECT Location FROM location WHERE ID = '$locationID'";
         $locationResult = mysqli_query($conn, $locationQuery);
         $locationName = mysqli_fetch_array($locationResult)['Location'];
         echo $locationName;
-    ?>
-   </td>
+    ?></td>
+
+  <td><?php 
+     @include 'config.php';
+     $productID = $row['P_id']; 
+     $query = "SELECT SUM(Quantity_received) AS Total_Quantity_Received FROM product_supplier WHERE P_id = '$productID'";
+     $result = mysqli_query($conn, $query);
+     if ($result) {
+          $row = mysqli_fetch_assoc($result);
+          echo $row['Total_Quantity_Received'];
+      } else {
+          echo "Error: " . mysqli_error($conn);
+     }
+    ?></td>
+  <td><?php 
+      @include 'config.php';
+      
+      $query = "SELECT SUM(Quantity_received) AS Total_Quantity_Received FROM product_supplier WHERE P_id = '$productID'";
+      $result = mysqli_query($conn, $query);
+      if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            echo $row['Total_Quantity_Received'] * $productPrice;
+        } else {
+            echo "Error: " . mysqli_error($conn);
+      }
+      ?></td>
+  ?></td>
       <!-- bach tl9a product id for any id -->
       <td>
         <a href="#" class="btn btn-link btn-sm view_stocks_data">View Stock</a>
       </td>
+      
       <td>
         <a href="#" class="btn btn-link btn-sm edit_stock">Update Stock</a>
       </td>
