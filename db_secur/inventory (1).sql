@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 12 avr. 2024 à 05:46
+-- Généré le : sam. 13 avr. 2024 à 19:48
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.0.28
 
@@ -49,7 +49,12 @@ INSERT INTO `history` (`ID`, `Stock`, `Product`, `Quantity`, `Time`) VALUES
 (12, 0, 51, 5, '2024-04-07 16:44:02'),
 (13, 24, 54, 4, '2024-04-08 16:47:49'),
 (14, 24, 54, 4, '2024-04-08 16:47:54'),
-(15, 24, 54, 10, '2024-04-11 19:07:48');
+(15, 24, 54, 10, '2024-04-11 19:07:48'),
+(16, 28, 61, 150, '2024-04-13 15:41:52'),
+(17, 28, 61, 50, '2024-04-13 15:42:16'),
+(18, 28, 61, 200, '2024-04-13 15:42:27'),
+(19, 28, 61, 100, '2024-04-13 15:42:34'),
+(20, 28, 61, 188, '2024-04-13 17:47:15');
 
 -- --------------------------------------------------------
 
@@ -85,6 +90,7 @@ CREATE TABLE `products` (
   `ID` int(11) NOT NULL,
   `img` varchar(100) NOT NULL,
   `Pname` varchar(50) NOT NULL,
+  `Price` float DEFAULT NULL,
   `Ptype` varchar(50) NOT NULL DEFAULT 'Undefined Item',
   `Description` varchar(350) NOT NULL DEFAULT 'No description is given for this product. ',
   `Created_by` int(11) NOT NULL,
@@ -95,10 +101,11 @@ CREATE TABLE `products` (
 -- Déchargement des données de la table `products`
 --
 
-INSERT INTO `products` (`ID`, `img`, `Pname`, `Ptype`, `Description`, `Created_by`, `Created`) VALUES
-(51, 'stopsign.png', 'Stop sign ', 'Road Signage', '', 28, '2024-04-06 20:45:12'),
-(52, 'Capture d’écran (2).png', 'screenshot', 'Public Event Supplies', '', 28, '2024-04-06 20:45:22'),
-(54, 'stopsign.png', 'stop sign2', '', '', 28, '2024-04-06 23:48:08');
+INSERT INTO `products` (`ID`, `img`, `Pname`, `Price`, `Ptype`, `Description`, `Created_by`, `Created`) VALUES
+(51, 'stopsign.png', 'Stop sign ', 50, 'Road Signage', '', 28, '2024-04-06 20:45:12'),
+(52, 'Capture d’écran (2).png', 'screenshot', 10, 'Public Event Supplies', '', 28, '2024-04-06 20:45:22'),
+(54, 'stopsign.png', 'stop sign2', 15, '', '', 28, '2024-04-06 23:48:08'),
+(61, 'Bouchi_Pic.jpeg', 'Slave', 23.2, 'Machinery', 'Gnetically gifted slave ', 28, '2024-04-12 21:21:03');
 
 -- --------------------------------------------------------
 
@@ -118,9 +125,7 @@ CREATE TABLE `productswsuppliers` (
 --
 
 INSERT INTO `productswsuppliers` (`id`, `supplier`, `product`, `Created`) VALUES
-(61, 1, 51, '2024-04-06 20:45:12'),
-(62, 2, 52, '2024-04-06 20:45:22'),
-(65, 11, 54, '2024-04-12 01:45:38');
+(70, 11, 61, '2024-04-12 21:21:04');
 
 -- --------------------------------------------------------
 
@@ -149,7 +154,9 @@ INSERT INTO `product_supplier` (`ID`, `S_id`, `P_id`, `Quantity_ordered`, `Quant
 (256, 11, 54, 5, 4, 1, 'Pending', 28, '2024-04-06 23:48:26', NULL),
 (259, 1, 51, 5, 5, 0, 'Arrived', 28, '2024-04-07 15:42:39', NULL),
 (261, 2, 52, 10, 10, 0, 'Arrived', 28, '2024-04-07 16:28:22', NULL),
-(262, 11, 54, 10, 10, 0, 'Arrived', 28, '2024-04-07 16:32:23', NULL);
+(262, 11, 54, 10, 10, 0, 'Arrived', 28, '2024-04-07 16:32:23', NULL),
+(263, 11, 61, 200, 188, 12, 'Pending', 28, '2024-04-12 21:33:29', NULL),
+(264, 11, 61, 100, 100, 0, 'Arrived', 28, '2024-04-13 15:42:11', NULL);
 
 --
 -- Déclencheurs `product_supplier`
@@ -159,11 +166,11 @@ CREATE TRIGGER `update_quantity_remaining_trigger` BEFORE UPDATE ON `product_sup
     DECLARE new_quantity_received INT;
     DECLARE new_quantity_ordered INT;
 
-    -- Retrieve the new values of Quantity_received and Quantity_ordered
+    
     SET new_quantity_received = NEW.Quantity_received;
     SET new_quantity_ordered = NEW.Quantity_ordered;
 
-    -- Calculate the new value for Quantity_remaining
+    
     SET NEW.Quantity_remaining = new_quantity_ordered - new_quantity_received;
 END
 $$
@@ -187,7 +194,9 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`ID`, `P_id`, `Location`) VALUES
 (22, 52, 8),
-(24, 54, 8);
+(24, 54, 9),
+(28, 61, 11),
+(30, 52, 8);
 
 -- --------------------------------------------------------
 
@@ -239,7 +248,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`ID`, `img`, `Fname`, `Lname`, `Description`, `Adress`, `Zip`, `Phone`, `password`, `Email`, `user_type`, `Created`) VALUES
-(5, '', 'Bouchentouf', 'Othman', '', '', 0, 0, 'e10adc3949ba59abbe56e057f20f883e', 'othmanbouchentouf@aui.ma', 'Admin', '2024-02-04 10:34:01'),
+(5, 'logo_EL.png', 'Chinwi', 'Skrt7', '', 'Al Akhawayn University', 53000, 659884411, 'e10adc3949ba59abbe56e057f20f883e', 'akram@gmail.com', 'Admin', '2024-02-04 10:34:01'),
 (7, '', 'Omar', 'Bouchentouf', '', '', 0, 0, 'e10adc3949ba59abbe56e057f20f883e', 'O.Bouchentouf@gmail.com', 'User', '2024-02-04 15:30:12'),
 (11, '', 'Hamza', 'Fahim', '', '', 0, 0, 'e10adc3949ba59abbe56e057f20f883e', 'H.Fahim@gmail.com', 'User', '2024-02-04 20:33:10'),
 (27, '', 'Morad', 'Essadiki', '', '', 0, 0, 'e10adc3949ba59abbe56e057f20f883e', 'MoradEssadiki@gmail.com', 'User', '2024-02-12 21:54:00'),
@@ -305,7 +314,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `history`
 --
 ALTER TABLE `history`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `location`
@@ -317,31 +326,31 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT pour la table `productswsuppliers`
 --
 ALTER TABLE `productswsuppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT pour la table `product_supplier`
 --
 ALTER TABLE `product_supplier`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
 
 --
 -- AUTO_INCREMENT pour la table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `users`
