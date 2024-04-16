@@ -51,7 +51,7 @@ while ($row = mysqli_fetch_assoc($result1)) {
     $productNames[] = $row['Pname'];
     $productPrices[] = $row['Price'];
 }
-
+//
 // Close the database connection
 mysqli_close($conn);
 ?>
