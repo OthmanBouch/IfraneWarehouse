@@ -439,7 +439,7 @@ if(isset($_POST['submit'])){
 
 
 <?php 
-session_start();
+
 if ($_SESSION['User_type'] == 'Admin') {
     include 'navbaradmin.php'; // Include admin navbar
 } elseif ($_SESSION['User_type'] == 'User') {
