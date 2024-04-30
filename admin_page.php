@@ -43,12 +43,12 @@ if (!isset($_SESSION['admin_name'])) {
 $query1 = "SELECT Pname, Price FROM products";
 $result1 = mysqli_query($conn, $query1);
 
-$productNames = [];
+$productNamess = [];
 $productPrices = [];
 
 // Store product names and prices in separate arrays
 while ($row = mysqli_fetch_assoc($result1)) {
-    $productNames[] = $row['Pname'];
+    $productNamess[] = $row['Pname'];
     $productPrices[] = $row['Price'];
 }
 //
@@ -64,7 +64,7 @@ if (!isset($_SESSION['admin_name'])) {
 }
 
 // Fetch stock information including product prices
-$queryy = "SELECT ps.ID, ps.P_id, ps.Quantity_ordered, p.Price FROM product_supplier ps INNER JOIN products p ON ps.P_id = p.ID";
+$queryy = "SELECT ps.ID, ps.P_id, ps.Quantity_ordered, p.Price, p.Pname FROM product_supplier ps INNER JOIN products p ON ps.P_id = p.ID";
 
 $resulty = mysqli_query($conn, $queryy);
 
@@ -80,12 +80,14 @@ $stockTotalPrice = [];
 // Calculate total price for each stock
 while ($row = mysqli_fetch_assoc($resulty)) {
     $stockID = $row['ID'];
+    $productName = $row['Pname'];
     $productPrice = $row['Price'];
     $quantityOrdered = $row['Quantity_ordered'];
     $totalPrice = $productPrice * $quantityOrdered;
     
     // Store total price for each stock
     $stockTotalPrice[$stockID] = $totalPrice;
+    $productNames[$stockID] = $productName;
 }
 
 mysqli_close($conn);
@@ -224,7 +226,7 @@ mysqli_close($conn);
     var productPriceChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: <?php echo json_encode($productNames); ?>,
+            labels: <?php echo json_encode($productNamess); ?>,
             datasets: [{
                 label: 'Price',
                 data: <?php echo json_encode($productPrices); ?>,
@@ -248,14 +250,13 @@ mysqli_close($conn);
     var ctx = document.getElementById('productStockChart').getContext('2d');
 
 // Create labels and data arrays for chart
-var labels = <?php echo json_encode(array_keys($stockTotalPrice)); ?>;
 var data = <?php echo json_encode(array_values($stockTotalPrice)); ?>;
 
 // Create the bar chart
 var stockPriceChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: labels,
+        labels: <?php echo json_encode($productNames); ?>,
         datasets: [{
             label: 'Stock Total Price',
             data: data,
