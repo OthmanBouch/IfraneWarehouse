@@ -20,19 +20,13 @@ if(isset($_POST['submit'])){
 
       $row = mysqli_fetch_array($result);
 
-      if($row['user_type'] == 'Admin'){
-
+      if($row['user_type'] == 'Admin' || $row['user_type'] == 'User' ){
+         $_SESSION['User_type'] = $row['user_type'];
          $_SESSION['admin_ID'] = $row['ID'];
          $_SESSION['admin_name'] = $row['Fname'];
          header('location:admin_page.php');
-
-      }elseif($row['user_type'] == 'User'){
-
-         $_SESSION['user_ID'] = $row['ID'];
-         header('location:user_page.php');
-
+         
       }
-     
    }else{
       $error[] = 'incorrect email or password!';
    }

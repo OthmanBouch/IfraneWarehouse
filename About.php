@@ -129,7 +129,7 @@
 }
   
 </style>
-<img class="logo-img" src="images\logo_EL.png" width="130" height="80" ALT="align box" ALIGN=CENTER>
+<img class="logo-img" src="images\logo.png" width="130" height="80" ALT="align box" ALIGN=CENTER>
 <div class="cards">
   <div class="card">
     <h2 class="card-title">Bouchentouf Othman</h2>

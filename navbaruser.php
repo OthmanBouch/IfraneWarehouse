@@ -11,7 +11,7 @@
         </div>
         <ul class="list-items">
             <li><a href="admin_page.php"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="UserManagement.php"><i class="fas fa-book"></i>Manage Users</a></li>
+            
             <li><a href="ProductManagement.php"><i class="fas fa-book"></i>Manage Product</a></li>
             <li><a href="SupplierManagement.php"><i class="fas fa-home"></i>Manage Suppliers</a></li>
             <li><a href="OrderManagement.php"><i class="bi bi-receipt-cutoff"></i>Manage Orders</a></li>

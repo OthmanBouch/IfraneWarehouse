@@ -3,10 +3,7 @@
 
 session_start();
 
-if (!isset($_SESSION['admin_name'])) {
-    header('location:login.php');
-    exit(); 
-}
+
 
 // hna ghanakhdo ch7al dyal items li pending o ch7al li arrived
 $query = "SELECT Status, COUNT(*) AS count FROM product_supplier GROUP BY Status";
@@ -313,6 +310,12 @@ var stockPriceChart = new Chart(ctx, {
     });
 </script>
 
-<?php include 'navbaradmin.php'; ?>
+<?php 
+session_start();
+if ($_SESSION['User_type'] == 'Admin') {
+    include 'navbaradmin.php'; // Include admin navbar
+} elseif ($_SESSION['User_type'] == 'User') {
+    include 'navbaruser.php'; // Include user navbar
+} ?>
 </body>
 </html>
