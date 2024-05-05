@@ -51,11 +51,6 @@ if(isset($_POST['submit'])){
 <div class="form-container">
 
    <form action="" method="post" >
-   <div class="app-name">
-   <h1>IfraneWarehouse</h1>
-</div>
-<br>
-<br>
       <h3>Login</h3>
       <?php
       if(isset($error)){
