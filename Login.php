@@ -47,10 +47,15 @@ if(isset($_POST['submit'])){
 
 </head>
 <body style="background: url(LogInImage.jpg);background-repeat: no-repeat;background-size: 100%;">
-  
+
 <div class="form-container">
 
    <form action="" method="post" >
+   <div class="app-name">
+   <h1>IfraneWarehouse</h1>
+</div>
+<br>
+<br>
       <h3>Login</h3>
       <?php
       if(isset($error)){
